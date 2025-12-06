@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
+import ImageUpload from '../../components/ImageUpload';
 import './HeroManagement.css';
 
 const HeroManagement = () => {
@@ -94,20 +95,14 @@ const HeroManagement = () => {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="backgroundImage">URL de Imagen de Fondo</label>
-            <input
-              type="url"
-              id="backgroundImage"
-              name="backgroundImage"
-              value={localHeroData.backgroundImage}
-              onChange={handleInputChange}
-              placeholder="https://ejemplo.com/imagen.jpg"
-            />
-            <small className="form-hint">
-              Recomendado: imagen de alta resolución (1920x1080 o superior)
-            </small>
-          </div>
+          <ImageUpload
+            label="Imagen de Fondo del Hero"
+            currentImage={localHeroData.backgroundImage}
+            onUpload={(url) => setLocalHeroData(prev => ({ ...prev, backgroundImage: url }))}
+          />
+          <small className="form-hint">
+            Recomendado: imagen de alta resolución (1920x1080 o superior)
+          </small>
 
           <div className="form-actions">
             <button 

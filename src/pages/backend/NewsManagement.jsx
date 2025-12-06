@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
+import ImageUpload from '../../components/ImageUpload';
 import './NewsManagement.css';
 
 const NewsManagement = () => {
@@ -125,17 +126,11 @@ const NewsManagement = () => {
                 required
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="image">URL de Imagen</label>
-              <input
-                type="url"
-                id="image"
-                name="image"
-                value={formData.image}
-                onChange={handleInputChange}
-                placeholder="https://ejemplo.com/imagen.jpg"
-              />
-            </div>
+            <ImageUpload
+              label="Imagen de la Noticia"
+              currentImage={formData.image}
+              onUpload={(url) => setFormData(prev => ({ ...prev, image: url }))}
+            />
             <div className="form-actions">
               <button type="submit" className="btn-save">Crear Noticia</button>
               <button 
@@ -183,16 +178,11 @@ const NewsManagement = () => {
                       required
                     />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor={`edit-image-${newsItem.id}`}>URL de Imagen</label>
-                    <input
-                      type="url"
-                      id={`edit-image-${newsItem.id}`}
-                      name="image"
-                      value={formData.image}
-                      onChange={handleInputChange}
-                    />
-                  </div>
+                  <ImageUpload
+                    label="Imagen de la Noticia"
+                    currentImage={formData.image}
+                    onUpload={(url) => setFormData(prev => ({ ...prev, image: url }))}
+                  />
                   <div className="form-actions">
                     <button type="submit" className="btn-save">Guardar</button>
                     <button type="button" className="btn-cancel" onClick={handleCancelEdit}>
