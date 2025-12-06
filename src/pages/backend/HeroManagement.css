@@ -1,0 +1,110 @@
+.hero-management {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hero-preview-section {
+    margin-bottom: 2rem;
+}
+
+.hero-preview-section h2 {
+    color: #fff;
+    margin: 0 0 1rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.hero-preview {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 16px;
+    padding: 4rem 2rem;
+    text-align: center;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.hero-preview h1 {
+    font-size: 3rem;
+    color: #fff;
+    margin: 0 0 1rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.hero-preview p {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.95);
+    margin: 0;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-form-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.hero-form-card h2 {
+    color: #fff;
+    margin: 0 0 1.5rem;
+    font-size: 1.5rem;
+}
+
+.form-hint {
+    display: block;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+.btn-reset {
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-reset:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.btn-save:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-save:disabled:hover {
+    transform: none;
+    box-shadow: 0 4px 15px rgba(56, 239, 125, 0.4);
+}
+
+@media (max-width: 768px) {
+    .hero-preview h1 {
+        font-size: 2rem;
+    }
+
+    .hero-preview p {
+        font-size: 1.2rem;
+    }
+
+    .hero-preview {
+        padding: 3rem 1.5rem;
+        min-height: 250px;
+    }
+}
