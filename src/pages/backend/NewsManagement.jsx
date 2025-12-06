@@ -10,7 +10,9 @@ const NewsManagement = () => {
   const [formData, setFormData] = useState({
     title: '',
     content: '',
+    mediaType: 'image', // 'image' or 'youtube'
     image: '',
+    youtubeUrl: '',
   });
 
   const handleInputChange = (e) => {
@@ -27,7 +29,7 @@ const NewsManagement = () => {
 
     try {
       await addNews(formData);
-      setFormData({ title: '', content: '', image: '' });
+      setFormData({ title: '', content: '', mediaType: 'image', image: '', youtubeUrl: '' });
       setShowCreateForm(false);
       alert('Noticia creada exitosamente');
     } catch (error) {
@@ -41,7 +43,9 @@ const NewsManagement = () => {
     setFormData({
       title: newsItem.title,
       content: newsItem.content,
+      mediaType: newsItem.mediaType || 'image',
       image: newsItem.image || '',
+      youtubeUrl: newsItem.youtubeUrl || '',
     });
   };
 
@@ -126,11 +130,57 @@ const NewsManagement = () => {
                 required
               />
             </div>
-            <ImageUpload
-              label="Imagen de la Noticia"
-              currentImage={formData.image}
-              onUpload={(url) => setFormData(prev => ({ ...prev, image: url }))}
-            />
+            
+            {/* Media Type Selector */}
+            <div className="form-group">
+              <label>Tipo de Contenido *</label>
+              <div className="media-type-selector">
+                <label className="radio-label">
+                  <input
+                    type="radio"
+                    name="mediaType"
+                    value="image"
+                    checked={formData.mediaType === 'image'}
+                    onChange={handleInputChange}
+                  />
+                  📷 Imagen
+                </label>
+                <label className="radio-label">
+                  <input
+                    type="radio"
+                    name="mediaType"
+                    value="youtube"
+                    checked={formData.mediaType === 'youtube'}
+                    onChange={handleInputChange}
+                  />
+                  🎥 Video YouTube
+                </label>
+              </div>
+            </div>
+
+            {formData.mediaType === 'image' ? (
+              <ImageUpload
+                label="Imagen de la Noticia"
+                currentImage={formData.image}
+                onUpload={(url) => setFormData(prev => ({ ...prev, image: url }))}
+              />
+            ) : (
+              <div className="form-group">
+                <label htmlFor="youtubeUrl">URL de YouTube *</label>
+                <input
+                  type="url"
+                  id="youtubeUrl"
+                  name="youtubeUrl"
+                  value={formData.youtubeUrl}
+                  onChange={handleInputChange}
+                  placeholder="https://www.youtube.com/watch?v=..."
+                  required={formData.mediaType === 'youtube'}
+                />
+                <small className="form-hint">
+                  Pega la URL completa del video de YouTube
+                </small>
+              </div>
+            )}
             <div className="form-actions">
               <button type="submit" className="btn-save">Crear Noticia</button>
               <button 
@@ -178,11 +228,57 @@ const NewsManagement = () => {
                       required
                     />
                   </div>
-                  <ImageUpload
-                    label="Imagen de la Noticia"
-                    currentImage={formData.image}
-                    onUpload={(url) => setFormData(prev => ({ ...prev, image: url }))}
-                  />
+                  
+                  {/* Media Type Selector */}
+                  <div className="form-group">
+                    <label>Tipo de Contenido *</label>
+                    <div className="media-type-selector">
+                      <label className="radio-label">
+                        <input
+                          type="radio"
+                          name="mediaType"
+                          value="image"
+                          checked={formData.mediaType === 'image'}
+                          onChange={handleInputChange}
+                        />
+                        📷 Imagen
+                      </label>
+                      <label className="radio-label">
+                        <input
+                          type="radio"
+                          name="mediaType"
+                          value="youtube"
+                          checked={formData.mediaType === 'youtube'}
+                          onChange={handleInputChange}
+                        />
+                        🎥 Video YouTube
+                      </label>
+                    </div>
+                  </div>
+
+                  {formData.mediaType === 'image' ? (
+                    <ImageUpload
+                      label="Imagen de la Noticia"
+                      currentImage={formData.image}
+                      onUpload={(url) => setFormData(prev => ({ ...prev, image: url }))}
+                    />
+                  ) : (
+                    <div className="form-group">
+                      <label htmlFor={`edit-youtubeUrl-${newsItem.id}`}>URL de YouTube *</label>
+                      <input
+                        type="url"
+                        id={`edit-youtubeUrl-${newsItem.id}`}
+                        name="youtubeUrl"
+                        value={formData.youtubeUrl}
+                        onChange={handleInputChange}
+                        placeholder="https://www.youtube.com/watch?v=..."
+                        required={formData.mediaType === 'youtube'}
+                      />
+                      <small className="form-hint">
+                        Pega la URL completa del video de YouTube
+                      </small>
+                    </div>
+                  )}
                   <div className="form-actions">
                     <button type="submit" className="btn-save">Guardar</button>
                     <button type="button" className="btn-cancel" onClick={handleCancelEdit}>

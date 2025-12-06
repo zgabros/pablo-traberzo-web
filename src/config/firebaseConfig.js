@@ -1,24 +1,14 @@
 // Firebase configuration
-// TODO: Replace these values with your actual Firebase project credentials
 // Get these from: Firebase Console > Project Settings > General > Your apps > Web app
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBkTG8Z9WLUe8GlkCp7yKqvkVhCarvWIBw",
-  authDomain: "pablo-traberzo-web.firebaseapp.com",
-  projectId: "pablo-traberzo-web",
-  storageBucket: "pablo-traberzo-web.firebasestorage.app",
-  messagingSenderId: "580433192258",
-  appId: "1:580433192258:web:af2f2805cf5c52148bd4db",
-  measurementId: "G-S84VGP68QL"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
-
-// Instructions to get your Firebase config:
-// 1. Go to https://console.firebase.google.com/
-// 2. Create a new project or select existing one
-// 3. Click on "Web" icon (</>) to add a web app
-// 4. Register your app (name it "Pablo Traberzo Web")
-// 5. Copy the firebaseConfig object and replace the values above
-// 6. Go to Authentication > Sign-in method
-// 7. Enable "Google" as a sign-in provider
 
 export default firebaseConfig;

@@ -25,6 +25,12 @@ const BackendLayout = () => {
           >
             🎸 Gestión de Hero
           </Link>
+          <Link 
+            to="/admin/courses" 
+            className={location.pathname === '/admin/courses' ? 'active' : ''}
+          >
+            📚 Gestión de Cursos
+          </Link>
           <Link to="/" className="back-to-site">
             ← Volver al Sitio
           </Link>

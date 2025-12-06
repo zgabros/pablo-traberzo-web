@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { getNews, createNews, updateNews, deleteNews, getHero, updateHero } from '../services/api';
+import { getNews, createNews, updateNews, deleteNews, getHero, updateHero, getCourses, createCourse, updateCourse, deleteCourse } from '../services/api';
 import emailjs from '@emailjs/browser';
 import emailConfig from '../config/emailConfig';
 
@@ -36,10 +36,16 @@ export const AppProvider = ({ children }) => {
   const [contactSuccess, setContactSuccess] = useState(false);
   const [contactError, setContactError] = useState(null);
 
+  // Courses State
+  const [coursesList, setCoursesList] = useState([]);
+  const [coursesLoading, setCoursesLoading] = useState(true);
+  const [coursesError, setCoursesError] = useState(null);
+
   // Load initial data
   useEffect(() => {
     loadNews();
     loadHero();
+    loadCourses();
   }, []);
 
   // ============= NEWS FUNCTIONS =============
@@ -167,6 +173,60 @@ export const AppProvider = ({ children }) => {
     setContactError(null);
   };
 
+  // ============= COURSES FUNCTIONS =============
+
+  const loadCourses = async () => {
+    try {
+      setCoursesLoading(true);
+      setCoursesError(null);
+      const courses = await getCourses();
+      setCoursesList(courses);
+    } catch (error) {
+      console.error('Failed to load courses:', error);
+      setCoursesError(error.message);
+    } finally {
+      setCoursesLoading(false);
+    }
+  };
+
+  const addCourse = async (courseData) => {
+    try {
+      const newCourse = await createCourse(courseData);
+      setCoursesList(prev => [newCourse, ...prev]);
+      return newCourse;
+    } catch (error) {
+      console.error('Failed to add course:', error);
+      throw error;
+    }
+  };
+
+  const editCourse = async (id, courseData) => {
+    try {
+      const updatedCourse = await updateCourse(id, courseData);
+      setCoursesList(prev =>
+        prev.map(course => (course.id === id ? { ...course, ...updatedCourse } : course))
+      );
+      return updatedCourse;
+    } catch (error) {
+      console.error('Failed to update course:', error);
+      throw error;
+    }
+  };
+
+  const removeCourse = async (id) => {
+    try {
+      await deleteCourse(id);
+      setCoursesList(prev => prev.filter(course => course.id !== id));
+    } catch (error) {
+      console.error('Failed to delete course:', error);
+      throw error;
+    }
+  };
+
+  const refreshCourses = () => {
+    loadCourses();
+  };
+
   // Context value
   const value = {
     // News
@@ -191,6 +251,15 @@ export const AppProvider = ({ children }) => {
     contactError,
     sendContactEmail,
     clearContactStatus,
+
+    // Courses
+    coursesList,
+    coursesLoading,
+    coursesError,
+    addCourse,
+    editCourse,
+    removeCourse,
+    refreshCourses,
   };
 
   return (

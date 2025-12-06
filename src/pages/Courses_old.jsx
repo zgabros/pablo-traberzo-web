@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { FaUserFriends, FaVideo, FaLaptop } from 'react-icons/fa';
 import './Courses.css';
 
@@ -26,7 +25,7 @@ const Courses = () => {
             <li>Material impreso incluido</li>
             <li>Acceso a instrumentos de estudio</li>
           </ul>
-          <Link to="/contacto" className="btn course-btn">Coordinar Clase</Link>
+          <a href="/contacto" className="btn course-btn">Coordinar Clase</a>
         </div>
 
         {/* On Demand */}
@@ -44,7 +43,7 @@ const Courses = () => {
             <li>Material descargable (PDF/Tabs)</li>
             <li>Soporte por email</li>
           </ul>
-          <Link to="/cursos/catalogo" className="btn course-btn">Ver Catálogo</Link>
+          <button className="btn course-btn">Ver Catálogo</button>
         </div>
 
         {/* Virtuales */}
@@ -61,7 +60,7 @@ const Courses = () => {
             <li>Grabación de la clase</li>
             <li>Feedback personalizado</li>
           </ul>
-          <Link to="/contacto" className="btn course-btn">Agendar Cita</Link>
+          <a href="/contacto" className="btn course-btn">Agendar Cita</a>
         </div>
       </div>
     </div>

@@ -4,12 +4,15 @@ import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import News from './pages/News';
+import NewsDetail from './pages/NewsDetail';
 import Courses from './pages/Courses';
+import CoursesCatalog from './pages/CoursesCatalog';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import BackendLayout from './pages/backend/BackendLayout';
 import NewsManagement from './pages/backend/NewsManagement';
 import HeroManagement from './pages/backend/HeroManagement';
+import CoursesManagement from './pages/backend/CoursesManagement';
 
 function App() {
   return (
@@ -19,7 +22,9 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="noticias" element={<News />} />
+          <Route path="noticias/:id" element={<NewsDetail />} />
           <Route path="cursos" element={<Courses />} />
+          <Route path="cursos/catalogo" element={<CoursesCatalog />} />
           <Route path="contacto" element={<Contact />} />
         </Route>
 
@@ -38,6 +43,7 @@ function App() {
           <Route index element={<Navigate to="/admin/news" replace />} />
           <Route path="news" element={<NewsManagement />} />
           <Route path="hero" element={<HeroManagement />} />
+          <Route path="courses" element={<CoursesManagement />} />
         </Route>
       </Routes>
     </Router>

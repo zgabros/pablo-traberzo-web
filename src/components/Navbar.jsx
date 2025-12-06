@@ -32,7 +32,6 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="container navbar-container">
         <Link to="/" className="navbar-logo" onClick={() => setIsOpen(false)}>
-          <FaGuitar className="logo-icon" />
           <span>Pablo Traberzo</span>
         </Link>
 

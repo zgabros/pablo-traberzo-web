@@ -10,6 +10,40 @@
     font-size: 0.95rem;
 }
 
+/* Mode toggle */
+.upload-mode-toggle {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    background: var(--bg-tertiary);
+    padding: 0.25rem;
+    border-radius: 8px;
+}
+
+.mode-btn {
+    flex: 1;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    color: var(--text-secondary);
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.mode-btn.active {
+    background: var(--accent-primary);
+    color: white;
+    font-weight: 500;
+}
+
+.mode-btn:hover:not(.active) {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Image preview */
 .image-preview {
     margin-bottom: 1rem;
     border-radius: 8px;
@@ -24,6 +58,7 @@
     display: block;
 }
 
+/* Upload button */
 .upload-button {
     display: inline-flex;
     align-items: center;
@@ -49,6 +84,55 @@
     cursor: not-allowed;
 }
 
+/* URL input */
+.url-input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.url-input {
+    flex: 1;
+    padding: 0.75rem;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--bg-tertiary);
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: var(--transition-fast);
+}
+
+.url-input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.url-submit-btn {
+    padding: 0.75rem 1.5rem;
+    background: var(--accent-primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    align-self: flex-start;
+}
+
+.url-submit-btn:hover {
+    background: var(--accent-secondary);
+    transform: translateY(-1px);
+}
+
+.url-error {
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+/* Spinner */
 .spinner-small {
     display: inline-block;
     width: 14px;
@@ -65,9 +149,21 @@
     }
 }
 
+/* Hint text */
 .upload-hint {
     margin-top: 0.5rem;
     font-size: 0.85rem;
     color: var(--text-secondary);
     font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .upload-mode-toggle {
+        flex-direction: column;
+    }
+
+    .mode-btn {
+        width: 100%;
+    }
 }

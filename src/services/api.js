@@ -17,6 +17,7 @@ import {
 const NEWS_COLLECTION = 'news';
 const HERO_DOC_ID = 'main';
 const HERO_COLLECTION = 'hero';
+const COURSES_COLLECTION = 'courses';
 
 // ============= NEWS API =============
 
@@ -201,5 +202,106 @@ export const updateHero = async (heroData) => {
   } catch (error) {
     console.error('Error updating hero:', error);
     throw new Error('Failed to update hero');
+  }
+};
+
+// ============= COURSES API =============
+
+/**
+ * Get all courses, ordered by creation date (newest first)
+ */
+export const getCourses = async () => {
+  try {
+    const coursesRef = collection(db, COURSES_COLLECTION);
+    const q = query(coursesRef, orderBy('createdAt', 'desc'));
+    const snapshot = await getDocs(q);
+    
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+      createdAt: doc.data().createdAt?.toDate?.() || new Date(),
+      updatedAt: doc.data().updatedAt?.toDate?.() || new Date(),
+    }));
+  } catch (error) {
+    console.error('Error getting courses:', error);
+    throw new Error('Failed to fetch courses');
+  }
+};
+
+/**
+ * Create a new course
+ */
+export const createCourse = async (courseData) => {
+  try {
+    const coursesRef = collection(db, COURSES_COLLECTION);
+    const newCourse = {
+      title: courseData.title,
+      description: courseData.description,
+      image: courseData.image || '',
+      price: courseData.price,
+      level: courseData.level || 'Principiante',
+      duration: courseData.duration || '',
+      lessons: courseData.lessons || '',
+      gumroadUrl: courseData.gumroadUrl || '',
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    };
+    
+    const docRef = await addDoc(coursesRef, newCourse);
+    
+    return {
+      id: docRef.id,
+      ...newCourse,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+  } catch (error) {
+    console.error('Error creating course:', error);
+    throw new Error('Failed to create course');
+  }
+};
+
+/**
+ * Update an existing course
+ */
+export const updateCourse = async (id, courseData) => {
+  try {
+    const courseDoc = doc(db, COURSES_COLLECTION, id);
+    const updatePayload = {
+      title: courseData.title,
+      description: courseData.description,
+      image: courseData.image || '',
+      price: courseData.price,
+      level: courseData.level || 'Principiante',
+      duration: courseData.duration || '',
+      lessons: courseData.lessons || '',
+      gumroadUrl: courseData.gumroadUrl || '',
+      updatedAt: serverTimestamp(),
+    };
+    
+    await updateDoc(courseDoc, updatePayload);
+    
+    return {
+      id,
+      ...updatePayload,
+      updatedAt: new Date(),
+    };
+  } catch (error) {
+    console.error('Error updating course:', error);
+    throw new Error('Failed to update course');
+  }
+};
+
+/**
+ * Delete a course
+ */
+export const deleteCourse = async (id) => {
+  try {
+    const courseDoc = doc(db, COURSES_COLLECTION, id);
+    await deleteDoc(courseDoc);
+    return { id };
+  } catch (error) {
+    console.error('Error deleting course:', error);
+    throw new Error('Failed to delete course');
   }
 };
