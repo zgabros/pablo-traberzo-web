@@ -86,14 +86,14 @@ const Contact = () => {
             <FaPhone className="info-icon" />
             <div>
               <h3>Teléfono</h3>
-              <p>+34 123 456 789</p>
+              <p>+598 000 000 000</p>
             </div>
           </div>
           <div className="info-item">
             <FaMapMarkerAlt className="info-icon" />
             <div>
               <h3>Ubicación</h3>
-              <p>Madrid, España</p>
+              <p>Montevideo, Uruguay</p>
             </div>
           </div>
         </div>

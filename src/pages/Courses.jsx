@@ -31,7 +31,6 @@ const Courses = () => {
 
         {/* On Demand */}
         <div className="course-card featured">
-          <div className="course-badge">Popular</div>
           <div className="course-icon">
             <FaVideo />
           </div>
