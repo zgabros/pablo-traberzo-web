@@ -9,6 +9,7 @@ import { auth, googleProvider } from '../config/firebase';
 // Admin emails whitelist
 const ADMIN_EMAILS = [
   'zgabros@gmail.com',
+  'ptraberzo@gmail.com',
 ];
 
 // Create Context
