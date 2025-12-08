@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
 import { useApp } from '../context/AppContext';
+import { canSubmitForm, getRemainingTime, recordFormSubmit } from '../utils/rateLimiter';
+import { sanitizeInput, sanitizeEmail } from '../utils/sanitize';
 import './Contact.css';
 
 const Contact = () => {
@@ -34,8 +36,31 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Check rate limit
+    if (!canSubmitForm()) {
+      const remainingTime = getRemainingTime();
+      alert(`Por favor espera ${remainingTime} minuto(s) antes de enviar otro mensaje.`);
+      return;
+    }
+    
+    // Sanitize inputs
+    const sanitizedData = {
+      name: sanitizeInput(formData.name),
+      email: sanitizeEmail(formData.email),
+      subject: sanitizeInput(formData.subject),
+      message: sanitizeInput(formData.message)
+    };
+    
+    // Validate sanitized data
+    if (!sanitizedData.name || !sanitizedData.email || !sanitizedData.message) {
+      alert('Por favor completa todos los campos requeridos correctamente.');
+      return;
+    }
+    
     try {
-      await sendContactEmail(formData);
+      await sendContactEmail(sanitizedData);
+      // Record submission for rate limiting
+      recordFormSubmit();
       // Clear form on success
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
