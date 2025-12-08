@@ -4,13 +4,8 @@ import {
   signOut, 
   onAuthStateChanged 
 } from 'firebase/auth';
-import { auth, googleProvider } from '../config/firebase';
-
-// Admin emails whitelist
-const ADMIN_EMAILS = [
-  'zgabros@gmail.com',
-  'ptraberzo@gmail.com',
-];
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, googleProvider, db } from '../config/firebase';
 
 // Create Context
 const AuthContext = createContext();
@@ -29,11 +24,40 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isAdminUser, setIsAdminUser] = useState(false);
+
+  // Check if user is admin by querying Firestore
+  const checkAdminStatus = async (currentUser) => {
+    if (!currentUser || !currentUser.email) {
+      setIsAdminUser(false);
+      return false;
+    }
+
+    try {
+      const adminDocRef = doc(db, 'admins', currentUser.email.toLowerCase());
+      const adminDoc = await getDoc(adminDocRef);
+      
+      const isAdmin = adminDoc.exists() && adminDoc.data().active === true;
+      setIsAdminUser(isAdmin);
+      return isAdmin;
+    } catch (error) {
+      console.error('Error checking admin status:', error);
+      setIsAdminUser(false);
+      return false;
+    }
+  };
 
   // Listen to auth state changes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+      
+      if (currentUser) {
+        await checkAdminStatus(currentUser);
+      } else {
+        setIsAdminUser(false);
+      }
+      
       setLoading(false);
     });
 
@@ -46,6 +70,7 @@ export const AuthProvider = ({ children }) => {
     try {
       setError(null);
       const result = await signInWithPopup(auth, googleProvider);
+      await checkAdminStatus(result.user);
       return result.user;
     } catch (error) {
       console.error('Error signing in with Google:', error);
@@ -59,6 +84,7 @@ export const AuthProvider = ({ children }) => {
     try {
       setError(null);
       await signOut(auth);
+      setIsAdminUser(false);
     } catch (error) {
       console.error('Error signing out:', error);
       setError(error.message);
@@ -66,10 +92,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Check if user is admin
+  // Check if user is admin (returns cached value)
   const isAdmin = () => {
-    if (!user || !user.email) return false;
-    return ADMIN_EMAILS.includes(user.email.toLowerCase());
+    return isAdminUser;
   };
 
   // Context value
