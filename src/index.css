@@ -5,21 +5,23 @@
   --bg-tertiary: #2a2a2a;
   --text-primary: #ffffff;
   --text-secondary: #a0a0a0;
-  --accent-primary: #d4af37; /* Gold/Metallic */
-  --accent-secondary: #c0c0c0; /* Silver */
+  --accent-primary: #d4af37;
+  /* Gold/Metallic */
+  --accent-secondary: #c0c0c0;
+  /* Silver */
   --accent-hover: #f1c40f;
-  
+
   /* Typography */
   --font-main: 'Inter', sans-serif;
   --font-heading: 'Outfit', sans-serif;
-  
+
   /* Spacing */
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
   --spacing-md: 2rem;
   --spacing-lg: 4rem;
   --spacing-xl: 8rem;
-  
+
   /* Transitions */
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s ease;
@@ -39,7 +41,12 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.2;
@@ -88,6 +95,8 @@ button {
   transition: var(--transition-normal);
   text-transform: uppercase;
   letter-spacing: 1px;
+  align-items: center;
+  display: flex;
 }
 
 .btn:hover {
@@ -99,6 +108,8 @@ button {
   background-color: transparent;
   border: 1px solid var(--accent-primary);
   color: var(--accent-primary);
+  align-items: center;
+  display: flex;
 }
 
 .btn-outline:hover {

@@ -36,7 +36,7 @@ const Home = () => {
           <div className="bio-content">
             <h2 className="section-title">Sobre Mí</h2>
             <p className="bio-text">
-              Con más de 15 años de experiencia en los escenarios y en la enseñanza, he dedicado mi vida a explorar las profundidades de la guitarra. Mi pasión abarca desde el flamenco tradicional hasta la fusión contemporánea.
+              Con más de 30 años de experiencia en los escenarios y en la enseñanza, he dedicado mi vida a explorar las profundidades de la guitarra. Mi pasión abarca desde el flamenco tradicional hasta la fusión contemporánea.
             </p>
             <p className="bio-text">
               Como educador, mi objetivo es inspirar a mis estudiantes a encontrar su propia voz a través del instrumento, proporcionando una base técnica sólida y fomentando la creatividad musical.
