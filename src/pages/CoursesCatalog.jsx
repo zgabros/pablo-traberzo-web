@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaClock, FaBook } from 'react-icons/fa';
 import { useApp } from '../context/AppContext';
 import './CoursesCatalog.css';
 
@@ -44,7 +45,12 @@ const CoursesCatalog = () => {
           {coursesList.map((course) => (
             <div key={course.id} className="course-card">
               <div className="course-image-container">
-                <img src={course.image} alt={course.title} className="course-image" />
+                <img 
+                  src={course.image} 
+                  alt={course.title} 
+                  className="course-image" 
+                  loading="lazy"
+                />
                 <span className={`course-level ${getLevelColor(course.level)}`}>
                   {course.level}
                 </span>
@@ -56,12 +62,12 @@ const CoursesCatalog = () => {
 
                 <div className="course-meta">
                   <div className="meta-item">
-                    <span className="meta-icon">⏱️</span>
+                    <FaClock className="meta-icon" />
                     <span className="meta-text">{course.duration}</span>
                   </div>
                   <div className="meta-item">
-                    <span className="meta-icon">📚</span>
-                    <span className="meta-text">{course.lessons}</span>
+                    <FaBook className="meta-icon" />
+                    <span className="meta-text">{course.lessons} lecciones</span>
                   </div>
                 </div>
 

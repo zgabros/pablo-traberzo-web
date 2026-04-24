@@ -129,12 +129,12 @@ const CoursesManagement = () => {
           className="btn-create"
           onClick={() => setShowCreateForm(!showCreateForm)}
         >
-          {showCreateForm ? '✕ Cancelar' : '+ Nuevo Curso'}
+          {showCreateForm ? 'Cancelar' : 'Nuevo Curso'}
         </button>
       </div>
 
       {showCreateForm && (
-        <div className="course-form-card">
+        <div className="admin-form-card">
           <h2>Crear Nuevo Curso</h2>
           <form onSubmit={handleCreate}>
             <div className="form-group">
@@ -256,7 +256,7 @@ const CoursesManagement = () => {
           <p className="empty-state">No hay cursos. Crea el primero.</p>
         ) : (
           coursesList.map((course) => (
-            <div key={course.id} className="course-item-card">
+            <div key={course.id} className="admin-item-card">
               {editingId === course.id ? (
                 <form onSubmit={handleUpdate} className="edit-form">
                   <div className="form-group">
@@ -362,14 +362,14 @@ const CoursesManagement = () => {
                 </form>
               ) : (
                 <>
-                  <div className="course-item-header">
+                  <div className="admin-item-header">
                     <div>
                       <h3>{course.title}</h3>
-                      <span className="course-meta-text">
+                      <span className="admin-item-meta">
                         {course.level} • {course.price} • {course.duration}
                       </span>
                     </div>
-                    <div className="course-actions">
+                    <div className="admin-item-actions">
                       <button className="btn-edit" onClick={() => handleEdit(course)}>
                         Editar
                       </button>
@@ -381,7 +381,7 @@ const CoursesManagement = () => {
                   <p className="course-content">{course.description}</p>
                   {course.image && (
                     <div className="course-image-preview">
-                      <img src={course.image} alt={course.title} />
+                      <img src={course.image} alt={course.title} loading="lazy" />
                     </div>
                   )}
                 </>

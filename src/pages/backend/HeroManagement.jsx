@@ -57,16 +57,16 @@ const HeroManagement = () => {
           className="hero-preview" 
           style={{ 
             backgroundImage: localHeroData.backgroundImage 
-              ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${localHeroData.backgroundImage})`
-              : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-          }}
+               ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${localHeroData.backgroundImage})`
+               : 'var(--bg-tertiary)'
+           }}
         >
           <h1>{localHeroData.title || 'Título del Hero'}</h1>
           <p>{localHeroData.subtitle || 'Subtítulo del Hero'}</p>
         </div>
       </div>
 
-      <div className="hero-form-card">
+      <div className="admin-form-card">
         <h2>Editar Hero</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -105,20 +105,20 @@ const HeroManagement = () => {
           </small>
 
           <div className="form-actions">
-            <button 
-              type="submit" 
-              className="btn-save" 
-              disabled={saving}
-            >
-              {saving ? 'Guardando...' : '💾 Guardar Cambios'}
-            </button>
-            <button 
-              type="button" 
-              className="btn-reset" 
-              onClick={handleReset}
-            >
-              🔄 Restablecer
-            </button>
+             <button 
+               type="submit" 
+               className="btn-save" 
+               disabled={saving}
+             >
+               {saving ? 'Guardando...' : 'Guardar Cambios'}
+             </button>
+             <button 
+               type="button" 
+               className="btn-reset" 
+               onClick={handleReset}
+             >
+               Restablecer
+             </button>
           </div>
         </form>
       </div>

@@ -78,7 +78,7 @@ const NewsDetail = () => {
             </div>
           ) : newsItem.image ? (
             <div className="article-image">
-              <img src={newsItem.image} alt={newsItem.title} />
+              <img src={newsItem.image} alt={newsItem.title} loading="lazy" />
             </div>
           ) : null}
 

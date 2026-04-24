@@ -31,7 +31,11 @@ const Home = () => {
       <section className="section bio-section">
         <div className="container bio-container">
           <div className="bio-image">
-            <img src="https://images.unsplash.com/photo-1516924962500-2b4b3b99ea02?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pablo Traberzo" />
+            <img 
+              src="https://images.unsplash.com/photo-1516924962500-2b4b3b99ea02?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+              alt="Pablo Traberzo" 
+              loading="lazy"
+            />
           </div>
           <div className="bio-content">
             <h2 className="section-title">Sobre Mí</h2>

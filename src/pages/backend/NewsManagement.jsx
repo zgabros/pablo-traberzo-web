@@ -98,12 +98,12 @@ const NewsManagement = () => {
           className="btn-create" 
           onClick={() => setShowCreateForm(!showCreateForm)}
         >
-          {showCreateForm ? '✕ Cancelar' : '+ Nueva Noticia'}
+          {showCreateForm ? 'Cancelar' : 'Nueva Noticia'}
         </button>
       </div>
 
       {showCreateForm && (
-        <div className="news-form-card">
+        <div className="admin-form-card">
           <h2>Crear Nueva Noticia</h2>
           <form onSubmit={handleCreate}>
             <div className="form-group">
@@ -203,7 +203,7 @@ const NewsManagement = () => {
           <p className="empty-state">No hay noticias. Crea la primera.</p>
         ) : (
           newsList.map((newsItem) => (
-            <div key={newsItem.id} className="news-item-card">
+            <div key={newsItem.id} className="admin-item-card">
               {editingId === newsItem.id ? (
                 <form onSubmit={handleUpdate} className="edit-form">
                   <div className="form-group">
@@ -288,30 +288,30 @@ const NewsManagement = () => {
                 </form>
               ) : (
                 <>
-                  <div className="news-item-header">
+                  <div className="admin-item-header">
                     <div>
                       <h3>{newsItem.title}</h3>
                       <span className="news-date">{newsItem.date}</span>
                     </div>
-                    <div className="news-actions">
+                    <div className="admin-item-actions">
                       <button 
                         className="btn-edit" 
                         onClick={() => handleEdit(newsItem)}
                       >
-                        ✏️ Editar
+                        Editar
                       </button>
                       <button 
                         className="btn-delete" 
                         onClick={() => handleDelete(newsItem.id)}
                       >
-                        🗑️ Eliminar
+                        Eliminar
                       </button>
                     </div>
                   </div>
                   <p className="news-content">{newsItem.content}</p>
                   {newsItem.image && (
                     <div className="news-image-preview">
-                      <img src={newsItem.image} alt={newsItem.title} />
+                      <img src={newsItem.image} alt={newsItem.title} loading="lazy" />
                     </div>
                   )}
                 </>

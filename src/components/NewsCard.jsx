@@ -19,7 +19,7 @@ const NewsCard = ({ news }) => {
         </div>
       ) : news.image ? (
         <div className="news-image-container">
-          <img src={news.image} alt={news.title} className="news-image" />
+          <img src={news.image} alt={news.title} className="news-image" loading="lazy" />
         </div>
       ) : null}
       
