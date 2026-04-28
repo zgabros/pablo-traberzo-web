@@ -1,0 +1,116 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ========================================
+    // HELPER FUNCTIONS
+    // ========================================
+    
+    /**
+     * Verifica que el usuario sea admin
+     * Busca en la colección 'admins' si el email existe y está activo
+     */
+    function isAdmin() {
+      return request.auth != null && 
+             request.auth.token.email_verified == true &&
+             exists(/databases/$(database)/documents/admins/$(request.auth.token.email)) &&
+             get(/databases/$(database)/documents/admins/$(request.auth.token.email)).data.active == true;
+    }
+    
+    /**
+     * Valida que los datos requeridos existan
+     */
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+    
+    /**
+     * Valida el tamaño de un string
+     */
+    function isValidStringSize(field, minSize, maxSize) {
+      return request.resource.data[field] is string &&
+             request.resource.data[field].size() >= minSize &&
+             request.resource.data[field].size() <= maxSize;
+    }
+    
+    // ========================================
+    // ADMINS COLLECTION
+    // ========================================
+    
+    match /admins/{adminEmail} {
+      // Solo admins pueden leer la lista de admins
+      allow read: if isAdmin();
+      // Solo admins pueden agregar/modificar/eliminar admins
+      allow write: if isAdmin();
+    }
+    
+    // ========================================
+    // NEWS COLLECTION
+    // ========================================
+    
+    match /news/{newsId} {
+      allow read: if true;
+      
+      function isValidNews() {
+        let data = request.resource.data;
+        
+        return hasRequiredFields(['title', 'content', 'date']) &&
+               isValidStringSize('title', 1, 200) &&
+               isValidStringSize('content', 1, 50000) &&
+               data.date is string &&
+               (!('mediaType' in data) || data.mediaType in ['image', 'youtube']) &&
+               (!('image' in data) || (data.image is string && data.image.size() <= 500)) &&
+               (!('youtubeUrl' in data) || (data.youtubeUrl is string && data.youtubeUrl.size() <= 200));
+      }
+      
+      allow create: if isAdmin() && isValidNews();
+      allow update: if isAdmin() && isValidNews();
+      allow delete: if isAdmin();
+    }
+    
+    // ========================================
+    // COURSES COLLECTION
+    // ========================================
+    
+    match /courses/{courseId} {
+      allow read: if true;
+      
+      function isValidCourse() {
+        let data = request.resource.data;
+        
+        return hasRequiredFields(['title', 'description', 'price', 'level']) &&
+               isValidStringSize('title', 1, 200) &&
+               isValidStringSize('description', 1, 2000) &&
+               isValidStringSize('price', 1, 20) &&
+               data.level in ['Principiante', 'Intermedio', 'Avanzado'] &&
+               (!('duration' in data) || (data.duration is string && data.duration.size() <= 50)) &&
+               (!('lessons' in data) || (data.lessons is string && data.lessons.size() <= 50)) &&
+               (!('image' in data) || (data.image is string && data.image.size() <= 500)) &&
+               (!('gumroadUrl' in data) || (data.gumroadUrl is string && data.gumroadUrl.size() <= 200));
+      }
+      
+      allow create: if isAdmin() && isValidCourse();
+      allow update: if isAdmin() && isValidCourse();
+      allow delete: if isAdmin();
+    }
+    
+    // ========================================
+    // HERO COLLECTION
+    // ========================================
+    
+    match /hero/{heroId} {
+      allow read: if true;
+      
+      function isValidHero() {
+        let data = request.resource.data;
+        
+        return hasRequiredFields(['title', 'subtitle']) &&
+               isValidStringSize('title', 1, 100) &&
+               isValidStringSize('subtitle', 1, 200) &&
+               (!('backgroundImage' in data) || (data.backgroundImage is string && data.backgroundImage.size() <= 500));
+      }
+      
+      allow write: if isAdmin() && isValidHero();
+    }
+  }
+}
